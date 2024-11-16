@@ -769,7 +769,7 @@ automation:
           entity_id: sensor.phone_next_alarm
           offset: -00:05:00
     actions:
-      - service: light.turn_on
+      - action: light.turn_on
         target:
           entity_id: light.bedroom
 ```
@@ -791,6 +791,34 @@ automation:
         - "18:30:00"
         - entity_id: sensor.bus_arrival
           offset: "-00:10:00"
+```
+
+### Limited templates
+
+It's also possible to use [limited templates](/docs/configuration/templating/#limited-templates) for times.
+
+```yaml
+blueprint:
+  input:
+    alarm:
+      name: Alarm
+      selector: 
+        text:
+    hour:
+      name: Hour
+      selector:
+        number:
+          min: 0
+          max: 24
+
+  trigger_variables:
+    my_alarm: !input alarm
+    my_hour: !input hour
+  trigger:
+    - platform: time
+      at:
+      - "sensor.{{ my_alarm | slugify }}_time"
+      - "{{ my_hour }}:30:00"
 ```
 
 ## Time pattern trigger

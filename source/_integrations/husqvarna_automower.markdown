@@ -118,8 +118,6 @@ The integration will create the following binary sensors:
   *The mower is currently charging. It reports this state if it autonomously returned to the dock due to low battery and if it leaves the dock for mowing after being fully charged.*
 - Leaving dock  
   *The mower is currently leaving the charging station and heading out to a starting point.*
-- Returning to dock  
-  *The mower is on its way home to the charging station.*
 
 ### Button (if available)
 
@@ -178,6 +176,11 @@ The integration will create the following sensors:
 - Total searching time
 - Work area (if available). For example: *My lawn*, *Front lawn*, *Back lawn*
 
+For each work area with activated systematic mowing these sensors are created:
+
+- Progress (in percent)
+- Last time completed
+
 ### Switch
 
 #### Avoid (if available)
@@ -221,7 +224,7 @@ This will override all your schedules during this time. The duration can be give
 
 ```yaml
 # Replace <name> with the name of your mower.
-service: husqvarna_automower.override_schedule
+service: husqvarna_automower.override_schedule_work_area
 target:
   entity_id: lawn_mower.<name>
 data:
